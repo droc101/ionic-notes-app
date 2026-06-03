@@ -8,7 +8,6 @@ import {
     IonLabel,
     IonList,
     IonPage,
-    IonSearchbar,
     IonTitle,
     IonToolbar
 } from '@ionic/react';
@@ -17,6 +16,8 @@ import React, {useEffect, useRef, useState} from "react";
 import NewNoteModal from "../components/NewNoteModal";
 import {Directory, Filesystem} from "@capacitor/filesystem";
 import {useLocation} from "react-router";
+
+import "./Home.css";
 
 type Note = {
     filename: string,
@@ -53,17 +54,14 @@ const Home: React.FC = () => {
                         <IonToolbar>
                             <IonTitle size="large">Notes</IonTitle>
                         </IonToolbar>
-                        <IonToolbar>
-                            <IonSearchbar placeholder={"Search Notes"} showCancelButton={"focus"}/>
-                        </IonToolbar>
                     </IonHeader>
                 </IonToolbar>
             </IonHeader>
             <IonContent fullscreen>
                 <NewNoteModal ionModal={ionModal}/>
-                <IonList>
-                    {
-                        notes.length === 0 ? <p>no notes</p> : notes.map((note) => {
+                {
+                    notes.length === 0 ? <div id="container"><strong>No Notes</strong></div> :
+                        <IonList>{notes.map((note) => {
                             return (
                                 <IonItem detail={true} routerLink={"/editor/" + note.filename} key={note.filename}>
                                     <IonLabel>
@@ -72,9 +70,9 @@ const Home: React.FC = () => {
                                     </IonLabel>
                                 </IonItem>
                             );
-                        })
-                    }
-                </IonList>
+                        })}</IonList>
+                }
+
             </IonContent>
             <IonFab slot="fixed" vertical="bottom" horizontal="end">
                 <IonFabButton onClick={() => {
