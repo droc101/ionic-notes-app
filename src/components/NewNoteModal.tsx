@@ -13,8 +13,11 @@ import {
 import {OverlayEventDetail} from '@ionic/core/components';
 import {useHistory} from 'react-router-dom';
 
-// TODO: type for ionModal
-const NewNoteModal: React.FC = ({ionModal}) => {
+type NewNoteModalProps = {
+    ionModal: React.RefObject<HTMLIonModalElement | null>
+};
+
+const NewNoteModal: React.FC<NewNoteModalProps> = ({ionModal}) => {
     const input = useRef<HTMLIonInputElement>(null);
     const confirmButton = useRef<HTMLIonButtonElement>(null);
 
@@ -25,6 +28,7 @@ const NewNoteModal: React.FC = ({ionModal}) => {
     }
 
     function onWillDismiss(event: CustomEvent<OverlayEventDetail>) {
+        if (!ionModal.current) return;
         ionModal.current.isOpen = false;
         if (event.detail.role === 'confirm') {
             history.push(`/editor/${event.detail.data}`);
@@ -32,9 +36,9 @@ const NewNoteModal: React.FC = ({ionModal}) => {
     }
 
     function onNoteNameChanged() {
-        if (input.current && confirmButton.current) {
+        if (input.current && confirmButton.current && input.current.value) {
             // TODO: better validation (existing notes, valid filenames, etc.)
-            confirmButton.current.disabled = input.current.value?.toString().length == 0;
+            confirmButton.current.disabled = input.current.value.toString().length == 0;
         }
     }
 
