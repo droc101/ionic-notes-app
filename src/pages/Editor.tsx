@@ -92,7 +92,6 @@ const Editor: React.FC<EditorProps> = ({match}) => {
                 </IonToolbar>
             </IonHeader>
             <IonContent fullscreen>
-                {/* TODO: full height textarea */}
                 <IonTextarea placeholder="Type Here" ref={textarea} class="editor"></IonTextarea>
             </IonContent>
             <IonToast message="Save Complete" duration={5000} ref={toast} onWillDismiss={onWillDismiss}/>
