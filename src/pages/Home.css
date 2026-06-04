@@ -13,7 +13,7 @@
 }
 
 .list {
-    background: transparent;
+    --ion-item-background: transparent;
 }
 
 ion-item {
