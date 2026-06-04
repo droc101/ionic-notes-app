@@ -50,29 +50,26 @@ const Home: React.FC = () => {
         <IonPage>
             <IonHeader>
                 <IonToolbar>
-                    <IonHeader>
-                        <IonToolbar>
-                            <IonTitle size="large">Notes</IonTitle>
-                        </IonToolbar>
-                    </IonHeader>
+                    <IonTitle size="large">Notes</IonTitle>
                 </IonToolbar>
             </IonHeader>
             <IonContent fullscreen>
                 <NewNoteModal ionModal={ionModal}/>
                 {
                     notes.length === 0 ? <div id="container"><strong>No Notes</strong></div> :
-                        <IonList>{notes.map((note) => {
-                            return (
-                                <IonItem detail={true} routerLink={"/editor/" + note.filename} key={note.filename}>
-                                    <IonLabel>
-                                        <h3>{note.filename}</h3>
-                                        <p>{note.modified.toLocaleString()}</p>
-                                    </IonLabel>
-                                </IonItem>
-                            );
-                        })}</IonList>
+                        <IonList class="list">
+                            {notes.map((note) => {
+                                return (
+                                    <IonItem detail={true} routerLink={"/editor/" + note.filename} key={note.filename}>
+                                        <IonLabel>
+                                            <h3>{note.filename}</h3>
+                                            <p>{note.modified.toLocaleString()}</p>
+                                        </IonLabel>
+                                    </IonItem>
+                                );
+                            })}
+                        </IonList>
                 }
-
             </IonContent>
             <IonFab slot="fixed" vertical="bottom" horizontal="end">
                 <IonFabButton onClick={() => {

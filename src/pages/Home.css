@@ -11,3 +11,11 @@
     font-size: 20px;
     line-height: 26px;
 }
+
+.list {
+    background: transparent;
+}
+
+ion-item {
+    --background: transparent;
+}

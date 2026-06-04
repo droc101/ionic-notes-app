@@ -58,7 +58,6 @@ const NewNoteModal: React.FC<NewNoteModalProps> = ({ionModal}) => {
                 </IonToolbar>
             </IonHeader>
             <IonContent className="ion-padding">
-                <IonItem>
                     <IonInput
                         placeholder="Note Name"
                         ref={input}
@@ -66,7 +65,6 @@ const NewNoteModal: React.FC<NewNoteModalProps> = ({ionModal}) => {
                         fill="outline"
                         onIonInput={onNoteNameChanged}
                     />
-                </IonItem>
             </IonContent>
         </IonModal>
     );

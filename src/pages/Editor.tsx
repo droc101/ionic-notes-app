@@ -73,22 +73,18 @@ const Editor: React.FC<EditorProps> = ({match}) => {
         <IonPage>
             <IonHeader>
                 <IonToolbar>
-                    <IonHeader>
-                        <IonToolbar>
-                            <IonButtons slot="start">
-                                <IonBackButton defaultHref="#"></IonBackButton>
-                            </IonButtons>
-                            <IonButtons slot="secondary">
-                                <IonButton onClick={save}>
-                                    <IonIcon slot="icon-only" icon={saveOutline}></IonIcon>
-                                </IonButton>
-                                <IonButton onClick={deleteNote}>
-                                    <IonIcon slot="icon-only" icon={trashBinOutline}></IonIcon>
-                                </IonButton>
-                            </IonButtons>
-                            <IonTitle size="large">{match.params.name}</IonTitle>
-                        </IonToolbar>
-                    </IonHeader>
+                    <IonButtons slot="start">
+                        <IonBackButton defaultHref="/"></IonBackButton>
+                    </IonButtons>
+                    <IonButtons slot="secondary">
+                        <IonButton onClick={save}>
+                            <IonIcon slot="icon-only" icon={saveOutline}></IonIcon>
+                        </IonButton>
+                        <IonButton onClick={deleteNote}>
+                            <IonIcon slot="icon-only" icon={trashBinOutline}></IonIcon>
+                        </IonButton>
+                    </IonButtons>
+                    <IonTitle size="large">{match.params.name}</IonTitle>
                 </IonToolbar>
             </IonHeader>
             <IonContent fullscreen>
