@@ -16,15 +16,9 @@ import React, {useEffect, useRef, useState} from "react";
 import NewNoteModal from "../components/NewNoteModal";
 import {Directory, Filesystem} from "@capacitor/filesystem";
 import {useLocation} from "react-router";
+import NoteListItem, {Note} from "../components/NoteListItem";
 
 import "./Home.css";
-
-type Note = {
-    // The filename of this note
-    filename: string,
-    // The last modified time of this note
-    modified: Date
-}
 
 const Home: React.FC = () => {
 
@@ -64,12 +58,7 @@ const Home: React.FC = () => {
                         <IonList class="list">
                             {notes.map((note) => {
                                 return (
-                                    <IonItem detail={true} routerLink={"/editor/" + note.filename} key={note.filename}>
-                                        <IonLabel>
-                                            <h3>{note.filename}</h3>
-                                            <p>{note.modified.toLocaleString()}</p>
-                                        </IonLabel>
-                                    </IonItem>
+                                    <NoteListItem note={note} />
                                 );
                             })}
                         </IonList>
