@@ -27,6 +27,7 @@ const Editor: React.FC<EditorProps> = ({match}) => {
 
     const history = useHistory();
 
+    // Load this note from disk (if it exists)
     useEffect(() => {
         (async () => {
             try {
@@ -43,6 +44,7 @@ const Editor: React.FC<EditorProps> = ({match}) => {
         })();
     }, [textarea]);
 
+    // Save this note to disk
     const save = async () => {
         if (!toast.current || !textarea.current || !textarea.current.value) {
             return;
@@ -56,6 +58,7 @@ const Editor: React.FC<EditorProps> = ({match}) => {
         toast.current.isOpen = true;
     };
 
+    // Delete this note and return to the home page
     const deleteNote = async () => {
         await Filesystem.deleteFile({
             path: match.params.name,
@@ -64,7 +67,8 @@ const Editor: React.FC<EditorProps> = ({match}) => {
         history.push("/");
     };
 
-    function onWillDismiss() {
+    // Close the toast when it closes (why isn't this automatic...)
+    const onWillDismiss = () => {
         if (!toast.current) return;
         toast.current.isOpen = false;
     }

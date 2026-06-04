@@ -7,7 +7,6 @@ import {
     IonContent,
     IonToolbar,
     IonTitle,
-    IonItem,
     IonInput,
 } from '@ionic/react';
 import {OverlayEventDetail} from '@ionic/core/components';
@@ -23,11 +22,11 @@ const NewNoteModal: React.FC<NewNoteModalProps> = ({ionModal}) => {
 
     const history = useHistory();
 
-    function confirm() {
+    const confirm = () => {
         ionModal.current?.dismiss(input.current?.value, 'confirm');
     }
 
-    function onWillDismiss(event: CustomEvent<OverlayEventDetail>) {
+    const onWillDismiss = (event: CustomEvent<OverlayEventDetail>) => {
         if (!ionModal.current) return;
         ionModal.current.isOpen = false;
         if (event.detail.role === 'confirm') {
@@ -35,7 +34,7 @@ const NewNoteModal: React.FC<NewNoteModalProps> = ({ionModal}) => {
         }
     }
 
-    function onNoteNameChanged() {
+    const onNoteNameChanged = () => {
         if (input.current && confirmButton.current && input.current.value) {
             // TODO: better validation (existing notes, valid filenames, etc.)
             confirmButton.current.disabled = input.current.value.toString().length == 0;
@@ -58,13 +57,13 @@ const NewNoteModal: React.FC<NewNoteModalProps> = ({ionModal}) => {
                 </IonToolbar>
             </IonHeader>
             <IonContent className="ion-padding">
-                    <IonInput
-                        placeholder="Note Name"
-                        ref={input}
-                        type="text"
-                        fill="outline"
-                        onIonInput={onNoteNameChanged}
-                    />
+                <IonInput
+                    placeholder="Note Name"
+                    ref={input}
+                    type="text"
+                    fill="outline"
+                    onIonInput={onNoteNameChanged}
+                />
             </IonContent>
         </IonModal>
     );

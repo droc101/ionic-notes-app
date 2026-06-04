@@ -20,7 +20,9 @@ import {useLocation} from "react-router";
 import "./Home.css";
 
 type Note = {
+    // The filename of this note
     filename: string,
+    // The last modified time of this note
     modified: Date
 }
 
@@ -31,6 +33,7 @@ const Home: React.FC = () => {
     const [notes, setNotes] = useState<Note[]>([]);
     const location = useLocation();
 
+    // Load list of notes from disk
     useEffect(() => {
         Filesystem.readdir({directory: Directory.Data, path: ""}).then(results => {
             const diskNotes: Note[] = [];
@@ -56,7 +59,8 @@ const Home: React.FC = () => {
             <IonContent fullscreen>
                 <NewNoteModal ionModal={ionModal}/>
                 {
-                    notes.length === 0 ? <div id="container"><strong>No Notes</strong></div> :
+                    notes.length === 0 ?
+                        <div id="container"><strong>No Notes</strong></div> :
                         <IonList class="list">
                             {notes.map((note) => {
                                 return (
