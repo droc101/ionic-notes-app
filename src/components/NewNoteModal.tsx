@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useRef, useState} from 'react';
 import {
     IonButtons,
     IonButton,
@@ -53,9 +53,6 @@ const NewNoteModal: React.FC<NewNoteModalProps> = ({ionModal}) => {
 
         const valid: boolean = validateNoteName(value) !== null;
         setIsValid(valid);
-        if (input.current && confirmButton.current && input.current.value) {
-            confirmButton.current.disabled = !valid;
-        }
     };
 
     const onWillPresent = () => {
@@ -75,7 +72,7 @@ const NewNoteModal: React.FC<NewNoteModalProps> = ({ionModal}) => {
                     </IonButtons>
                     <IonTitle>New Note</IonTitle>
                     <IonButtons slot="end">
-                        <IonButton strong={true} onClick={() => confirm()} ref={confirmButton} disabled>
+                        <IonButton strong={true} onClick={() => confirm()} ref={confirmButton} disabled={!isValid}>
                             Confirm
                         </IonButton>
                     </IonButtons>
