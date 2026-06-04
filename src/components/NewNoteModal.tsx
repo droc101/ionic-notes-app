@@ -1,4 +1,4 @@
-import React, {useRef} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {
     IonButtons,
     IonButton,
@@ -20,11 +20,14 @@ const NewNoteModal: React.FC<NewNoteModalProps> = ({ionModal}) => {
     const input = useRef<HTMLIonInputElement>(null);
     const confirmButton = useRef<HTMLIonButtonElement>(null);
 
+    const [isTouched, setIsTouched] = useState(false);
+    const [isValid, setIsValid] = useState<boolean>();
+
     const history = useHistory();
 
     const confirm = () => {
         ionModal.current?.dismiss(input.current?.value, 'confirm');
-    }
+    };
 
     const onWillDismiss = (event: CustomEvent<OverlayEventDetail>) => {
         if (!ionModal.current) return;
@@ -32,17 +35,39 @@ const NewNoteModal: React.FC<NewNoteModalProps> = ({ionModal}) => {
         if (event.detail.role === 'confirm') {
             history.push(`/editor/${event.detail.data}`);
         }
-    }
+    };
 
-    const onNoteNameChanged = () => {
+    const markTouched = () => {
+        setIsTouched(true);
+    };
+
+    const validateNoteName = (name: string) => {
+        return name.match(/^[^/\\:*?<>|.]+$/g);
+    };
+
+    const validate = (event: Event) => {
+        const value = (event.target as HTMLInputElement).value;
+        setIsValid(undefined);
+
+        if (value === '') return;
+
+        const valid: boolean = validateNoteName(value) !== null;
+        setIsValid(valid);
         if (input.current && confirmButton.current && input.current.value) {
-            // TODO: better validation (existing notes, valid filenames, etc.)
-            confirmButton.current.disabled = input.current.value.toString().length == 0;
+            confirmButton.current.disabled = !valid;
         }
-    }
+    };
+
+    const onWillPresent = () => {
+        setIsTouched(false);
+        setIsValid(undefined);
+        if (input.current && input.current.value) {
+            input.current.value = '';
+        }
+    };
 
     return (
-        <IonModal ref={ionModal} onWillDismiss={(event) => onWillDismiss(event)}>
+        <IonModal ref={ionModal} onWillDismiss={onWillDismiss} onIonModalWillPresent={onWillPresent}>
             <IonHeader>
                 <IonToolbar>
                     <IonButtons slot="start">
@@ -62,7 +87,10 @@ const NewNoteModal: React.FC<NewNoteModalProps> = ({ionModal}) => {
                     ref={input}
                     type="text"
                     fill="outline"
-                    onIonInput={onNoteNameChanged}
+                    onIonInput={validate}
+                    errorText="Invalid note name"
+                    onIonBlur={markTouched}
+                    className={`${isValid === false && 'ion-invalid'} ${isTouched && 'ion-touched'}`}
                 />
             </IonContent>
         </IonModal>
